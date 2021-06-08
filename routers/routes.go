@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 var port string = ":8081"
@@ -30,15 +32,17 @@ func allUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
-	http.HandleFunc("/", baseUrl)
-	http.HandleFunc("/users", allUsers)
+	router := mux.NewRouter().StrictSlash(true)
+
+	router.HandleFunc("/", baseUrl)
+	router.HandleFunc("/users", allUsers)
+	log.Fatal(http.ListenAndServe(port, router))
 }
 
 func Run() {
 	message := "Running on port " + port
 	
 	fmt.Println(message)
-	handleRequests()
 
-	log.Fatal(http.ListenAndServe(port, nil))
+	handleRequests()
 }
