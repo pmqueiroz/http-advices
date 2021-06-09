@@ -31,7 +31,7 @@ func handleRequests() {
 	router.HandleFunc("/advices/{status}", status.GetAdviceByStatus).Methods("GET")
 	router.HandleFunc("/advices/search/{query}", status.GetAdvicesByQuery).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":" + "5000", router))
+	log.Fatal(http.ListenAndServe(":" + port, router))
 }
 
 func Run() {
