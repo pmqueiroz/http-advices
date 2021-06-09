@@ -11,7 +11,6 @@ import (
 )
 
 var port string = os.Getenv("PORT")
-
 type User struct {
 	Email 	string `json:"Email"`
 	Password string `json:"Password"`
@@ -20,20 +19,16 @@ type User struct {
 
 type Users []User
 
-func baseUrl(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to my Go api")
-}
-
-func adviceDoc(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "static/advice.html")
+func docs(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "static/docs.html")
 }
 
 func handleRequests() {
 	router := mux.NewRouter().StrictSlash(true)
 
-	router.HandleFunc("/", baseUrl)
-	router.HandleFunc("/advice", adviceDoc)
-	router.HandleFunc("/advice/{status}", status.SendAdvice)
+	router.HandleFunc("/", docs).Methods("GET")
+	router.HandleFunc("/advice/{status}", status.SendAdvice).Methods("GET")
+
 	log.Fatal(http.ListenAndServe(":" + port, router))
 }
 
