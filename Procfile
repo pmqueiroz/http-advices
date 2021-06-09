@@ -1,1 +1,1 @@
-worker: go run main.go
+web: go main.go
