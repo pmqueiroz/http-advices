@@ -1,1 +1,1 @@
-worker: go main.go
+web: go main.go
