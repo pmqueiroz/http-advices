@@ -36,6 +36,12 @@
          color: #f8f8f2;   
       }
 
+      .endpoint-container {
+         display: flex;
+         flex-direction: column;
+         gap: 30px;
+      }
+
       .endpoint strong {
          color: #f8f8f2
       }
@@ -61,10 +67,17 @@
 <body>
    <div id="container">
       <h2>Welcome to http advice API</h2>
-      <div class="endpoint get">
-         <span class="get-span">GET</span>
-         <strong>/advice/{status}</strong>
-         <p>Returns a advice to your http status</p>
+      <div class="endpoint-container">
+         <div class="endpoint get">
+            <span class="get-span">GET</span>
+            <strong>/advices</strong>
+            <p>Returns all advices</p>
+         </div>
+         <div class="endpoint get">
+            <span class="get-span">GET</span>
+            <strong>/advices/{status}</strong>
+            <p>Returns a advice to your http status</p>
+         </div>
       </div>
    </div>
 </body>

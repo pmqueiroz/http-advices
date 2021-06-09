@@ -22,11 +22,7 @@ type Advice struct {
 	Message  string  `json:"message"`
 }
 
-
-func SendAdvice(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	statusId, _ := strconv.ParseInt(vars["status"], 10, 0)
-
+func fetchAdvices() Advices {
 	file, err := os.Open("advices.json")
 
 	if err != nil {
@@ -41,9 +37,19 @@ func SendAdvice(w http.ResponseWriter, r *http.Request) {
 
 	json.Unmarshal(byteValue, &data)
 
+	return data
+}
+
+
+func GetAdviceByStatus(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	statusId, _ := strconv.ParseInt(vars["status"], 10, 0)
+
+	data := fetchAdvices()
+
 	returnData := Advice{
 		Status: 0,
-		Message: "Invalid http status chode. Check: https://developer.mozilla.org/docs/Web/HTTP/Status",
+		Message: "Invalid http status code. Check: https://developer.mozilla.org/docs/Web/HTTP/Status",
 	}
 	
 	for _, sts := range validStatusCode {
@@ -64,6 +70,8 @@ func SendAdvice(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(returnData)
 }
 
-func RequiredStatus(w http.ResponseWriter, r *http.Request){
+func GetAllAdvices(w http.ResponseWriter, r *http.Request){
+	data := fetchAdvices()
 
+	json.NewEncoder(w).Encode(data)
 }

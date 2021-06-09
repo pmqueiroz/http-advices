@@ -27,7 +27,8 @@ func handleRequests() {
 	router := mux.NewRouter().StrictSlash(true)
 
 	router.HandleFunc("/", docs).Methods("GET")
-	router.HandleFunc("/advice/{status}", status.SendAdvice).Methods("GET")
+	router.HandleFunc("/advices", status.GetAllAdvices).Methods("GET")
+	router.HandleFunc("/advices/{status}", status.GetAdviceByStatus).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":" + port, router))
 }
