@@ -20,7 +20,7 @@ type User struct {
 type Users []User
 
 func docs(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "static/docs.html")
+	http.ServeFile(w, r, "docs/docs.html")
 }
 
 func handleRequests() {
