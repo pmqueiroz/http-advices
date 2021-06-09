@@ -9,7 +9,7 @@ import (
 	"github.com/pmqueiroz/http-advices/status"
 )
 
-var port string = ":8081"
+var port string = ":8080"
 
 type User struct {
 	Email 	string `json:"Email"`
