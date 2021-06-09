@@ -1,12 +1,12 @@
 package routers
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/pmqueiroz/http-advices/status"
 )
 
 var port string = ":8081"
@@ -23,19 +23,16 @@ func baseUrl(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Welcome to my Go api")
 }
 
-func allUsers(w http.ResponseWriter, r *http.Request) {
-	users := Users{
-		User{Email: "cleiton@mail.go", Password: "myfirstgoapi123", Bio: "Hello, im a test user for this api"},
-	}
-	
-	json.NewEncoder(w).Encode(users)
+func adviceDoc(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "static/advice.html")
 }
 
 func handleRequests() {
 	router := mux.NewRouter().StrictSlash(true)
 
 	router.HandleFunc("/", baseUrl)
-	router.HandleFunc("/users", allUsers)
+	router.HandleFunc("/advice", adviceDoc)
+	router.HandleFunc("/advice/{status}", status.SendAdvice)
 	log.Fatal(http.ListenAndServe(port, router))
 }
 

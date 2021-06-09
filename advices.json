@@ -1,0 +1,20 @@
+{ 
+   "advices": [
+      {
+         "status": 400,
+         "message": "The most important thing is the thing most easily forgotten."
+      },
+      {
+         "status": 405,
+         "message": "Fail. Fail again. Fail better."
+      },
+      {
+         "status": 409,
+         "message": "The person who never made a mistake never made anything."
+      },
+      {
+         "status": 425,
+         "message": "Life is short enough, don't race to the finish."
+      }
+   ]
+}

@@ -1,6 +1,6 @@
 package main
 
-import "github.com/pmqueiroz/go-server/routers"
+import "github.com/pmqueiroz/http-advices/routers"
 
 func main() {
 	routers.Run()

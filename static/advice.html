@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">   
+   <title>Http Advice</title>
+   <style>
+      #container {
+         font-family: "Poppins";
+         font-size: 18px;
+         font-weight: 400;
+      }
+      .endpoint {
+         display: flex;
+         align-items: center;
+         border: solid 1px #49CC90;
+         border-radius: 15px;
+         padding-left: 15px;
+         gap: 10px;
+         width: 60%;
+         min-width: 620px;
+      }
+
+      .endpoint strong {
+         color: #161616
+      }
+
+      .get {
+         background: #ECFAF4;
+      }
+
+      .get-span {
+         background: #49CC90;
+         border-radius: 5px;
+         width: 80px;
+         height: 40px;
+         color: #fff;
+         font-size: 24px;
+         font-weight: 600;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+   </style>
+</head>
+<body>
+   <div id="container">
+      <h2>Welcome to http advice API</h2>
+      <div class="endpoint get">
+         <span class="get-span">GET</span>
+         <strong>/advice/{status}</strong>
+         <p>Returns a advice to your http status</p>
+      </div>
+   </div>
+</body>
+</html>
