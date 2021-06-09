@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/pmqueiroz/http-advices/status"
 )
 
-var port string = ":8081"
+var port string = os.Getenv("PORT")
 
 type User struct {
 	Email 	string `json:"Email"`
@@ -33,7 +34,7 @@ func handleRequests() {
 	router.HandleFunc("/", baseUrl)
 	router.HandleFunc("/advice", adviceDoc)
 	router.HandleFunc("/advice/{status}", status.SendAdvice)
-	log.Fatal(http.ListenAndServe(port, router))
+	log.Fatal(http.ListenAndServe(":" + port, router))
 }
 
 func Run() {
