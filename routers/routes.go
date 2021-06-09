@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/pmqueiroz/http-advices/status"
+	"github.com/pmqueiroz/http-advices/advice"
 )
 
 var port string = os.Getenv("PORT")
@@ -27,9 +27,9 @@ func handleRequests() {
 	router := mux.NewRouter().StrictSlash(true)
 
 	router.HandleFunc("/", docs).Methods("GET")
-	router.HandleFunc("/advices", status.GetAllAdvices).Methods("GET")
-	router.HandleFunc("/advices/{status}", status.GetAdviceByStatus).Methods("GET")
-	router.HandleFunc("/advices/search/{query}", status.GetAdvicesByQuery).Methods("GET")
+	router.HandleFunc("/advices", advice.GetAllAdvices).Methods("GET")
+	router.HandleFunc("/advices/{status}", advice.GetAdviceByStatus).Methods("GET")
+	router.HandleFunc("/advices/search/{query}", advice.GetAdvicesByQuery).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":" + port, router))
 }
