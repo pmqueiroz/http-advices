@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 )
@@ -20,6 +21,12 @@ type Advices struct {
 type Advice struct {
 	Status 	int64 	  `json:"status"`
 	Message  string  `json:"message"`
+}
+
+type SearchResult struct {
+	Query    string	 `json:"query"`
+	Total    int	    `json:"total_results"`
+	Advices  []Advice  `json:"results"`
 }
 
 func fetchAdvices() Advices {
@@ -42,8 +49,8 @@ func fetchAdvices() Advices {
 
 
 func GetAdviceByStatus(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	statusId, _ := strconv.ParseInt(vars["status"], 10, 0)
+	status := mux.Vars(r)["status"]
+	statusId, _ := strconv.ParseInt(status, 10, 0)
 
 	data := fetchAdvices()
 
@@ -74,4 +81,28 @@ func GetAllAdvices(w http.ResponseWriter, r *http.Request){
 	data := fetchAdvices()
 
 	json.NewEncoder(w).Encode(data)
+}
+
+func GetAdvicesByQuery(w http.ResponseWriter, r *http.Request) {
+	toWord := func(s string) string {return " " + s + " "}
+
+	query := strings.ToLower(mux.Vars(r)["query"])
+	
+	data := fetchAdvices()
+
+	var resultAdvices []Advice
+	
+	for _, advice := range data.Advices {
+		if strings.Contains(strings.ToLower(advice.Message), toWord(query)) {
+			resultAdvices = append(resultAdvices, advice)
+		}
+	}
+
+	resultData := SearchResult{
+		Query: query,
+		Total: len(resultAdvices),
+		Advices: resultAdvices,
+	}
+
+	json.NewEncoder(w).Encode(resultData)
 }

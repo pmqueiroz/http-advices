@@ -23,23 +23,26 @@
          font-family: "Poppins";
          font-size: 18px;
          font-weight: 400;
-      }
-      .endpoint {
-         display: flex;
-         align-items: center;
-         border: solid 1px #50fa7b;
-         border-radius: 15px;
-         padding-left: 15px;
-         gap: 10px;
-         width: 60%;
-         min-width: 620px;
-         color: #f8f8f2;   
+         width: 100%;
       }
 
+      .endpoint {
+         display: flex;
+         border: solid 1px #50fa7b;
+         border-radius: 15px;
+         padding: 0 15px;
+         width: 80%;
+         color: #f8f8f2;
+         cursor: pointer;
+         gap: 10px;
+         align-items: center;
+      }
       .endpoint-container {
          display: flex;
          flex-direction: column;
          gap: 30px;
+         width: 100%;
+         align-items: center;
       }
 
       .endpoint strong {
@@ -48,6 +51,12 @@
 
       .get {
          background: rgba(80, 250, 123, .3);
+      }
+
+      code {
+         color: #44475a;
+         flex: 1;
+         text-align: end;
       }
 
       .get-span {
@@ -62,23 +71,110 @@
          justify-content: center;
          align-items: center;
       }
+
+      .toasta {
+         padding: 12px 20px;
+         color: #ffffff;
+         display: inline-block;
+         box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.12), 0 10px 36px -4px rgba(77, 96, 232, 0.3);
+         background: -webkit-linear-gradient(315deg, #73a5ff, #5477f5);
+         background: linear-gradient(135deg, #73a5ff, #5477f5);
+         position: fixed;
+         top: -150px;
+         right: 15px;
+         opacity: 0;
+         transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+         border-radius: 2px;
+         cursor: pointer;
+      }
+
+      #toast {
+         padding: 0;
+         color: #ffffff;
+         position: absolute;
+         bottom: 100px;
+         right: 100px;
+         background: rgba(189, 147, 249, .3);
+         border-radius: 5px;
+         display: flex;
+         align-items: center;
+         transition: opacity 0.5s;
+         opacity: 0;
+      }
+
+      #toast p {
+         padding: 0 10px;
+         margin: 0;
+      }
+
+      .toastbar {
+         border-radius: 5px 0 0 5px;
+         background: #bd93f9;
+         width: 5px;
+         height: 50px;
+         display: flex;
+      }
+
    </style>
 </head>
 <body>
    <div id="container">
       <h2>Welcome to http advice API</h2>
+      <div id="toast">
+         <span class="toastbar"></span>
+         <p>
+            curl copied!
+         </p>
+      </div>
       <div class="endpoint-container">
          <div class="endpoint get">
             <span class="get-span">GET</span>
             <strong>/advices</strong>
             <p>Returns all advices</p>
+            <code>curl http-advices.herokuapp.com/advices</code>
          </div>
          <div class="endpoint get">
             <span class="get-span">GET</span>
             <strong>/advices/{status}</strong>
             <p>Returns a advice to your http status</p>
+            <code>curl http-advices.herokuapp.com/advices/400</code>
+         </div>
+         <div class="endpoint get">
+            <span class="get-span">GET</span>
+            <strong>/advices/search/{query}</strong>
+            <p>Returns all advice found by query</p>
+            <code>curl http-advices.herokuapp.com/advices/search/fail</code>
          </div>
       </div>
    </div>
+
+   <script>
+      function addToast () {
+         const toast = document.getElementById("toast")
+
+         toast.style.opacity = 1
+
+         setTimeout(() => { toast.style.opacity = 0 }, 3000)
+      }
+
+      const endpoints = document.getElementsByClassName("endpoint")
+
+      for (let i = 0; i < endpoints.length; i++) {
+         const item = endpoints[i]
+
+         const textToCopy = item.getElementsByTagName("code")[0].innerText
+
+         item.addEventListener("click", function() {
+            let myTemporaryInputElement = document.createElement("input")
+            myTemporaryInputElement.type = "text"
+            myTemporaryInputElement.value = textToCopy
+            document.body.appendChild(myTemporaryInputElement)
+            myTemporaryInputElement.select()
+            document.execCommand("Copy")
+            addToast()
+            document.body.removeChild(myTemporaryInputElement)
+         })
+      }
+   </script>
 </body>
 </html>
