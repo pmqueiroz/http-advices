@@ -28,7 +28,6 @@
 
       .endpoint {
          display: flex;
-         border: solid 1px #50fa7b;
          border-radius: 15px;
          padding: 0 15px;
          width: 80%;
@@ -37,6 +36,7 @@
          gap: 10px;
          align-items: center;
       }
+      
       .endpoint-container {
          display: flex;
          flex-direction: column;
@@ -50,7 +50,13 @@
       }
 
       .get {
+         border: solid 1px #50fa7b;
          background: rgba(80, 250, 123, .3);
+      }
+
+      .post {
+         border: solid 1px #8be9fd;
+         background: rgba(139, 233, 253, .3);
       }
 
       code {
@@ -61,6 +67,13 @@
 
       .get-span {
          background: #50fa7b;
+      }
+
+      .post-span {
+         background: #8be9fd;
+      }
+
+      span {
          border-radius: 5px;
          width: 80px;
          height: 40px;
@@ -132,6 +145,12 @@
             <strong>/advices</strong>
             <p>Returns all advices</p>
             <code>curl http-advices.herokuapp.com/advices</code>
+         </div>
+         <div class="endpoint post">
+            <span class="post-span">POST</span>
+            <strong>/advices</strong>
+            <p>Suggest a new advice</p>
+            <code>curl -d '{"status": 303,"message":"new advice"}' -X POST http-advices.herokuapp.com/advices</code>
          </div>
          <div class="endpoint get">
             <span class="get-span">GET</span>
