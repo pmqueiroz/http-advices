@@ -1,7 +1,16 @@
 package main
 
-import "github.com/pmqueiroz/http-advices/routers"
+import (
+	"os"
+
+	"github.com/joho/godotenv"
+	"github.com/pmqueiroz/http-advices/routers"
+)
 
 func main() {
-	routers.Run()
+	godotenv.Load()
+
+	port := os.Getenv("PORT")
+
+	routers.Run(&port)
 }

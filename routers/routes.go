@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
+	"github.com/fatih/color"
 	"github.com/gorilla/mux"
 	"github.com/pmqueiroz/http-advices/advice"
 )
 
-var port string = os.Getenv("PORT")
 type User struct {
 	Email 	string `json:"Email"`
 	Password string `json:"Password"`
@@ -23,21 +22,25 @@ func docs(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "docs/docs.html")
 }
 
-func handleRequests() {
+func handleRequests(port string) {
 	router := mux.NewRouter().StrictSlash(true)
 
 	router.HandleFunc("/", docs).Methods("GET")
 	router.HandleFunc("/advices", advice.GetAllAdvices).Methods("GET")
+	router.HandleFunc("/advices", advice.SuggestNewAdvice).Methods("POST")
 	router.HandleFunc("/advices/{status}", advice.GetAdviceByStatus).Methods("GET")
 	router.HandleFunc("/advices/search/{query}", advice.GetAdvicesByQuery).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":" + port, router))
 }
 
-func Run() {
-	message := "Running on port " + port
-	
-	fmt.Println(message)
+func Run(port *string) {
+	alert := color.New(color.FgHiMagenta, color.Bold).PrintfFunc()
 
-	handleRequests()
+	message := "Running on port "
+
+	fmt.Print(message)
+	alert(*port)
+
+	handleRequests(*port)
 }

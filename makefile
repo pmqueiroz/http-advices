@@ -7,3 +7,6 @@ build:
 
 run:
 	./"${BIN_FILE}"
+
+dev: 
+	@go run main.go

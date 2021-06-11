@@ -106,3 +106,9 @@ func GetAdvicesByQuery(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(resultData)
 }
+
+func SuggestNewAdvice(w http.ResponseWriter, r *http.Request) {
+	reqBody, _ := ioutil.ReadAll(r.Body)
+
+	json.NewEncoder(w).Encode(reqBody)
+}
