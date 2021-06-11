@@ -2,6 +2,7 @@ package advice
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -110,5 +111,13 @@ func GetAdvicesByQuery(w http.ResponseWriter, r *http.Request) {
 func SuggestNewAdvice(w http.ResponseWriter, r *http.Request) {
 	reqBody, _ := ioutil.ReadAll(r.Body)
 
-	json.NewEncoder(w).Encode(reqBody)
+	var data Advice
+
+	err := json.Unmarshal(reqBody, &data)
+
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+
+	json.NewEncoder(w).Encode(data)
 }
